@@ -96,12 +96,13 @@
 
 -(void) updateProjection
 {
-    CCDirector *director = [CCDirector sharedDirector];
-    
-    // CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    
-    [self updateVirtualViewport:director.winSize];
-    [self updateScreenSize:director.winSize];
+//    CCDirector *director = [CCDirector sharedDirector];
+//    
+//    // CGSize screenSize = [UIScreen mainScreen].bounds.size;
+//    CGSize directorWinSize = director.winSize;
+//    
+//    [self updateVirtualViewport:directorWinSize];
+//    [self updateScreenSize:directorWinSize];
     
     CCLOG(@"%@ - Custom update projection", LOG_TAG);
     

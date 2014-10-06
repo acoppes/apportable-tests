@@ -18,6 +18,8 @@
 #import "CustomCamera.h"
 //#endif
 
+#define COCOS2D_DEBUG 1
+
 @implementation AppDelegate
 
 @synthesize window;
@@ -60,35 +62,10 @@
     CGSize maxSize = CGSizeMake(568, 320);
     
     CustomCamera *customCamera = [CustomCamera cameraWithScreenSize:screenSize minSize:minSize maxSize:maxSize];
-    
-//    float aspectMin = minSize.width / maxSize.height;
-//    float aspectMax = maxSize.width / minSize.height;
-//    float aspect = screenSize.width / screenSize.height;
-//    
-//    CGSize croppedScreenSize = screenSize;
-//    
-//    VirtualViewport *virtualViewport;
-//    
-//    if (aspect > aspectMax) {
-//        CGSize bestSize = CGSizeMake(maxSize.width, minSize.height);
-//        float aspectBest = bestSize.width / bestSize.height;
-//        float newWidth = roundf(croppedScreenSize.height * aspectBest);
-//        croppedScreenSize.width = newWidth;
-//        virtualViewport = [VirtualViewport autoAdjustViewport:croppedScreenSize withMinSize:bestSize andMaxSize:bestSize];
-//    } else if (aspect < aspectMin) {
-//        CGSize bestSize = CGSizeMake(minSize.width, maxSize.height);
-//        float aspectBest = bestSize.width / bestSize.height;
-//        float newHeight = roundf(croppedScreenSize.width / aspectBest);
-//        croppedScreenSize.height = newHeight;
-//        virtualViewport = [VirtualViewport autoAdjustViewport:croppedScreenSize withMinSize:bestSize andMaxSize:bestSize];
-//    } else {
-//        virtualViewport = [VirtualViewport autoAdjustViewport:croppedScreenSize withMinSize:minSize andMaxSize:maxSize];
-//    }
-    
     [[CCDirector sharedDirector] setProjectionDelegate:customCamera];
     [[CCDirector sharedDirector] setProjection:kCCDirectorProjectionCustom];
     
-    // [[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
+//    [[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
     
 //#endif
 	

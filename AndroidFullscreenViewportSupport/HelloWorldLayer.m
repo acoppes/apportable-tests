@@ -61,9 +61,20 @@
 //        NSLog(@"SAVED VALUE: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"a"]);
 
         CGSize winSize = [CCDirector sharedDirector].winSize;
+        
+        if (winSize.width < winSize.height)
+            winSize = CGSizeMake(winSize.height, winSize.width);
 
         CGSize minSize = CGSizeMake(480, 310);
-        CGSize maxSize = CGSizeMake(1000, 320);
+        CGSize maxSize = CGSizeMake(568, 320);
+        
+        {
+            CCSprite *s = [CCSprite node];
+            s.textureRect = CGRectMake(0, 0, 1024, 768);
+            s.color = ccc3(255, 255, 255);
+            s.position = ccp(winSize.width * 0.5f, winSize.height * 0.5f);
+            [self addChild:s];
+        }
         
         {
             CCSprite *s = [CCSprite node];
