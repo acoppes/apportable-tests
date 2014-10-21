@@ -97,12 +97,13 @@
 -(void) updateProjection
 {
 //    CCDirector *director = [CCDirector sharedDirector];
-//    
-//    // CGSize screenSize = [UIScreen mainScreen].bounds.size;
-//    CGSize directorWinSize = director.winSize;
-//    
-//    [self updateVirtualViewport:directorWinSize];
-//    [self updateScreenSize:directorWinSize];
+//
+//    CGSize winSize = [UIScreen mainScreen].bounds.size;
+   // CGSize winSize = director.winSize;
+//
+    
+//    [self updateVirtualViewport:winSize];
+//    [self updateScreenSize:winSize];
     
     CCLOG(@"%@ - Custom update projection", LOG_TAG);
     
@@ -120,6 +121,8 @@
     
     float zoom = CC_CONTENT_SCALE_FACTOR();
     
+    CCLOG(@"%@ - scaleFactor - (%f)", LOG_TAG, zoom);
+
     CGPoint center = ccp(0.5, 0.5);
     
     float xoffset = virtualWidth * center.x * CC_CONTENT_SCALE_FACTOR();
@@ -136,6 +139,8 @@
     matrix4ToIdentity(view);
     
     matrix4ToOrtho(projection, left, right, bottom, top, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR());
+    
+    CCLOG(@"%@ - left, right, bottom, top - (%f, %f, %f, %f)", LOG_TAG, left, right, bottom, top);
     
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(projection);

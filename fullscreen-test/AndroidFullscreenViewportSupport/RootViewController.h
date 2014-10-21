@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface RootViewController : UIViewController {
-
-}
+#ifdef APPORTABLE
+#import <BridgeKit/AndroidViewOnSystemUiVisibilityChangeListener.h>
+@interface RootViewController : UIViewController<AndroidViewOnSystemUiVisibilityChangeListener>
+#else
+@interface RootViewController : UIViewController
+#endif
 
 @end

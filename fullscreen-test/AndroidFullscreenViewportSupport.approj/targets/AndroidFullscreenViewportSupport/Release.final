@@ -66,9 +66,9 @@
         }
     ], 
     "config": {
-        "APPLICATION_FULL_NAME": "AndroidFullscreenViewportSupport", 
+        "APPLICATION_FULL_NAME": "AndroidFullscreenTest", 
         "APPLICATION_IDENTIFIER": "com.yourcompany.AndroidFullscreenViewportSupport", 
-        "APPLICATION_NAME": "AndroidFullscreenViewportSupport", 
+        "APPLICATION_NAME": "AndroidFullscreenTest", 
         "FEATURES": [
             "landscape"
         ], 
@@ -80,6 +80,12 @@
         }
     }, 
     "defines": {
+        "COCOS2D_DEBUG": {
+            "env": {
+                "IRONHIDE_DEBUG": "1"
+            }, 
+            "value": 1
+        }, 
         "NDEBUG": 1, 
         "NS_BLOCK_ASSERTIONS": 1, 
         "__IPHONE_OS_VERSION_MIN_REQUIRED": 70100
@@ -261,6 +267,11 @@
                     "key": "CCDirectorIOS.h", 
                     "prefix": "AndroidFullscreenViewportSupport/libs/cocos2d/Platforms/iOS/", 
                     "suffix": "CCDirectorIOS.h"
+                }, 
+                "CCDirectorIOSWithCamera.h": {
+                    "key": "CCDirectorIOSWithCamera.h", 
+                    "prefix": "AndroidFullscreenViewportSupport/", 
+                    "suffix": "CCDirectorIOSWithCamera.h"
                 }, 
                 "CCDirectorMac.h": {
                     "key": "CCDirectorMac.h", 
@@ -652,6 +663,11 @@
                     "prefix": "AndroidFullscreenViewportSupport/", 
                     "suffix": "RootViewController.h"
                 }, 
+                "SceneLayer.h": {
+                    "key": "SceneLayer.h", 
+                    "prefix": "AndroidFullscreenViewportSupport/", 
+                    "suffix": "SceneLayer.h"
+                }, 
                 "SimpleAudioEngine.h": {
                     "key": "SimpleAudioEngine.h", 
                     "prefix": "AndroidFullscreenViewportSupport/libs/CocosDenshion/", 
@@ -751,19 +767,19 @@
             "type": "iquote"
         }, 
         {
-            "header_path": "/var/folders/23/nt96v3hs0c9dsr59rvm0ft2m0000gn/T/tmpwxt1ql/BUILT_PRODUCTS_DIR/include", 
+            "header_path": "/var/folders/ns/2ywm8lqj0f9ff0wx27kq6gr80000gn/T/tmp1aTJO5/BUILT_PRODUCTS_DIR/include", 
             "type": "I"
         }, 
         {
-            "header_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include", 
+            "header_path": "/Applications/Xcode-5.1.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include", 
             "type": "I"
         }, 
         {
-            "header_path": "/var/folders/23/nt96v3hs0c9dsr59rvm0ft2m0000gn/T/tmpwxt1ql/DERIVED_FILE_DIR/armv7", 
+            "header_path": "/var/folders/ns/2ywm8lqj0f9ff0wx27kq6gr80000gn/T/tmp1aTJO5/DERIVED_FILE_DIR/armv7", 
             "type": "I"
         }, 
         {
-            "header_path": "/var/folders/23/nt96v3hs0c9dsr59rvm0ft2m0000gn/T/tmpwxt1ql/DERIVED_FILE_DIR", 
+            "header_path": "/var/folders/ns/2ywm8lqj0f9ff0wx27kq6gr80000gn/T/tmp1aTJO5/DERIVED_FILE_DIR", 
             "type": "I"
         }
     ], 
@@ -823,6 +839,13 @@
             "flags": [], 
             "header_paths": [], 
             "language": "objc", 
+            "source": "AndroidFullscreenViewportSupport/CCDirectorIOSWithCamera.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
             "source": "AndroidFullscreenViewportSupport/CCMoveBehaviorNode.m"
         }, 
         {
@@ -838,6 +861,13 @@
             "header_paths": [], 
             "language": "objc", 
             "source": "AndroidFullscreenViewportSupport/RootViewController.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "AndroidFullscreenViewportSupport/SceneLayer.m"
         }, 
         {
             "defines": {}, 

@@ -52,19 +52,19 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         
-//        NSDictionary *mydefaults = @{ @"a" : @"b" };
-//        [[NSUserDefaults standardUserDefaults] registerDefaults:mydefaults];
-//        [[NSUserDefaults standardUserDefaults] setValuesForKeysWithDictionary:mydefaults];
+        //        NSDictionary *mydefaults = @{ @"a" : @"b" };
+        //        [[NSUserDefaults standardUserDefaults] registerDefaults:mydefaults];
+        //        [[NSUserDefaults standardUserDefaults] setValuesForKeysWithDictionary:mydefaults];
         
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        
-//        NSLog(@"SAVED VALUE: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"a"]);
-
+        //        [[NSUserDefaults standardUserDefaults] synchronize];
+        //
+        //        NSLog(@"SAVED VALUE: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"a"]);
+        
         CGSize winSize = [CCDirector sharedDirector].winSize;
         
         if (winSize.width < winSize.height)
             winSize = CGSizeMake(winSize.height, winSize.width);
-
+        
         CGSize minSize = CGSizeMake(480, 310);
         CGSize maxSize = CGSizeMake(568, 320);
         
@@ -83,7 +83,7 @@
             s.position = ccp(winSize.width * 0.5f, winSize.height * 0.5f);
             [self addChild:s];
         }
-
+        
         {
             
             CCSprite *s = [CCSprite node];
@@ -95,13 +95,12 @@
         
         {
             CCLabelTTF *l = [CCLabelTTF labelWithString:@"Some text" dimensions:CGSizeMake(100, 30)
-                                                         alignment:UITextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap fontName:@"Comic_Book" fontSize:20];
+                                              alignment:UITextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap fontName:@"Comic_Book" fontSize:20];
             l.anchorPoint = ccp(0.5, 0.5);
             l.color = ccc3(255, 255, 255);
             l.position = ccp(winSize.width * 0.5f, winSize.height * 0.5f);
             [self addChild:l z:2];
         }
-        
         
 	}
 	return self;

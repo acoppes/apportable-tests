@@ -12,10 +12,10 @@
     // A short name to identify the application.
     // Used to decide the APK filename, but not shown
     // anywhere in the app.
-    // "APPLICATION_NAME": "",
+    "APPLICATION_NAME": "AndroidFullscreenTest",
 
     // The name of the application to display in the launcher
-    // "APPLICATION_FULL_NAME": "",
+    "APPLICATION_FULL_NAME": "AndroidFullscreenTest",
 
     // The unique identifier for the application.
     // Normally this is in reverse DNS notation, e.g.,
@@ -188,7 +188,9 @@
     // or the value can be a dictionary specifying the value and the
     // environment that it should be used in, e.g.,
     // "SOME_DEFINE": {"value": "\"yep its building on android\"", "env": {"TARGET_OS": "android"}}
-    "defines": {},
+    "defines": {
+	"COCOS2D_DEBUG": { "value": 1, "env": {"IRONHIDE_DEBUG": "1"} }
+    },
    
     // A list of dependencies.  Typically these correspond to
     // frameworks in the xcode project.

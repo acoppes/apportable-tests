@@ -10,12 +10,13 @@
 
 #import "AppDelegate.h"
 #import "GameConfig.h"
-#import "HelloWorldLayer.h"
+#import "SceneLayer.h"
 #import "RootViewController.h"
 
 //#ifdef APPORTABLE
 #import "VirtualViewport.h"
 #import "CustomCamera.h"
+#import "CCDirectorIOSWithCamera.h"
 //#endif
 
 #define COCOS2D_DEBUG 1
@@ -24,7 +25,7 @@
 
 @synthesize window;
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+-(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // UISystemInterfaceVisibilityStyleImmersiveAlways
     
@@ -41,8 +42,8 @@
 	
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use the default director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeDefault];
+//	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+//		[CCDirector setDirectorType:kCCDirectorTypeDefault];
 	
 //#ifndef APPORTABLE
 //    if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
@@ -51,7 +52,8 @@
 //    CCDirector *director = [CCDirector sharedDirector];
 //#else
     
-    CCDirector *director = [CCDirector sharedDirector];
+    CCDirector *director = [CCDirectorIOSWithCamera sharedDirector];
+    // CCDirector *director = [CCDirector sharedDirector];
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     
@@ -119,7 +121,7 @@
 	// make the View Controller a child of the main window
 	// [window addSubview: viewController.view];
     window.rootViewController = viewController;
-	
+    
 #ifndef APPORTABLE
     [window makeKeyAndVisible];
 #endif
@@ -134,11 +136,17 @@
 //#endif
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
+	[[CCDirector sharedDirector] runWithScene: [SceneLayer scene]];
+    
+    // https://github.com/apportable/apportable/blob/a9f5f2ce30d5562a3ac25d60e0394668edd446c0/System/UIKit/src/android/UIApplication.m
+    // UIWindow* window = [self keyWindow];
+    // [window._proxy setSystemUiVisibility:androidInterfaceStyle];
     
 #ifdef APPORTABLE
     [UIApplication sharedApplication].systemInterfaceVisibilityStyle = UISystemInterfaceVisibilityStyleImmersiveAlways;
 #endif
+    
+    return YES;
 }
 
 

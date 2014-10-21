@@ -11,6 +11,8 @@
 		0113788719DC32310093F8A4 /* CustomCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 0113788019DC32310093F8A4 /* CustomCamera.m */; };
 		0113788819DC32310093F8A4 /* MatrixUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0113788219DC32310093F8A4 /* MatrixUtils.m */; };
 		0113788919DC32310093F8A4 /* VirtualViewport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0113788419DC32310093F8A4 /* VirtualViewport.m */; };
+		0137EB0E19F05548002617F0 /* SceneLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0137EB0D19F05548002617F0 /* SceneLayer.m */; };
+		0137EB1119F058D8002617F0 /* CCDirectorIOSWithCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 0137EB1019F058D8002617F0 /* CCDirectorIOSWithCamera.m */; };
 		018F019C19D1FA050018E7E6 /* Comic_Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018F019B19D1FA050018E7E6 /* Comic_Book.ttf */; };
 		018F01A019D2138E0018E7E6 /* YIKES.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018F019F19D2138E0018E7E6 /* YIKES.ttf */; };
 		019BC79719D2F6DB0017AF43 /* CCMoveBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 019BC79619D2F6DB0017AF43 /* CCMoveBehaviorNode.m */; };
@@ -147,6 +149,10 @@
 		0113788219DC32310093F8A4 /* MatrixUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixUtils.m; sourceTree = "<group>"; };
 		0113788319DC32310093F8A4 /* VirtualViewport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualViewport.h; sourceTree = "<group>"; };
 		0113788419DC32310093F8A4 /* VirtualViewport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualViewport.m; sourceTree = "<group>"; };
+		0137EB0C19F0553A002617F0 /* SceneLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneLayer.h; sourceTree = "<group>"; };
+		0137EB0D19F05548002617F0 /* SceneLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneLayer.m; sourceTree = "<group>"; };
+		0137EB0F19F058D8002617F0 /* CCDirectorIOSWithCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOSWithCamera.h; sourceTree = "<group>"; };
+		0137EB1019F058D8002617F0 /* CCDirectorIOSWithCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOSWithCamera.m; sourceTree = "<group>"; };
 		018F019B19D1FA050018E7E6 /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Comic_Book.ttf; path = Resources/Comic_Book.ttf; sourceTree = "<group>"; };
 		018F019F19D2138E0018E7E6 /* YIKES.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = YIKES.ttf; path = Resources/YIKES.ttf; sourceTree = "<group>"; };
 		019BC79519D2F6DB0017AF43 /* CCMoveBehaviorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMoveBehaviorNode.h; sourceTree = "<group>"; };
@@ -465,6 +471,8 @@
 		01F4828319D1F7DF00E26C11 /* AndroidFullscreenViewportSupport */ = {
 			isa = PBXGroup;
 			children = (
+				0137EB0F19F058D8002617F0 /* CCDirectorIOSWithCamera.h */,
+				0137EB1019F058D8002617F0 /* CCDirectorIOSWithCamera.m */,
 				0113787A19DC32310093F8A4 /* Android */,
 				019BC79519D2F6DB0017AF43 /* CCMoveBehaviorNode.h */,
 				019BC79619D2F6DB0017AF43 /* CCMoveBehaviorNode.m */,
@@ -474,6 +482,8 @@
 				01F483DC19D1F7E100E26C11 /* RootViewController.m */,
 				01F483DE19D1F7E100E26C11 /* HelloWorldLayer.h */,
 				01F483DF19D1F7E100E26C11 /* HelloWorldLayer.m */,
+				0137EB0C19F0553A002617F0 /* SceneLayer.h */,
+				0137EB0D19F05548002617F0 /* SceneLayer.m */,
 				01F483E119D1F7E100E26C11 /* GameConfig.h */,
 				01F4828419D1F7DF00E26C11 /* Resources */,
 				01F4829819D1F7DF00E26C11 /* libs */,
@@ -970,12 +980,14 @@
 				01F482FE19D1F7E000E26C11 /* CCParticleExamples.m in Sources */,
 				01F483D219D1F7E100E26C11 /* ZFont.m in Sources */,
 				01F483BA19D1F7E100E26C11 /* CJSONDeserializer.m in Sources */,
+				0137EB0E19F05548002617F0 /* SceneLayer.m in Sources */,
 				01F4829C19D1F7DF00E26C11 /* CCAction.m in Sources */,
 				01F4832319D1F7E000E26C11 /* CCSpriteFrameCache.m in Sources */,
 				01F4836D19D1F7E000E26C11 /* MacGLView.m in Sources */,
 				01F4830719D1F7E000E26C11 /* CCParticleSystemQuad.m in Sources */,
 				01F483D719D1F7E100E26C11 /* main.m in Sources */,
 				01F4832C19D1F7E000E26C11 /* CCTextureCache.m in Sources */,
+				0137EB1119F058D8002617F0 /* CCDirectorIOSWithCamera.m in Sources */,
 				01F483C819D1F7E100E26C11 /* FontLabelStringDrawing.m in Sources */,
 				01F483C519D1F7E100E26C11 /* FontLabel.m in Sources */,
 				01F4838819D1F7E000E26C11 /* TGAlib.m in Sources */,
