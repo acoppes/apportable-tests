@@ -143,11 +143,6 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)onSystemUiVisibilityChange:(int32_t)visibility
-{
-    NSLog(@"Window changed visibility: %d", visibility);
-}
-
 - (void)dealloc {
     [super dealloc];
 }
@@ -164,6 +159,11 @@
 - (BOOL) canBecomeFirstResponder
 {
     return YES;
+}
+
+- (void)onSystemUiVisibilityChange:(int32_t)visibility
+{
+    NSLog(@"Window changed visibility: %d", visibility);
 }
 
 - (void)buttonUpWithEvent:(UIEvent *)event

@@ -13,6 +13,8 @@
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer <CCTargetedTouchDelegate>
 {
+    CGSize _windowSize;
+    CGRect _screenBounds;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

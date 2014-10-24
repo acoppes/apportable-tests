@@ -35,4 +35,6 @@
 
 - (CGSize) virtualSize;
 
+- (void) updateProjection;
+
 @end

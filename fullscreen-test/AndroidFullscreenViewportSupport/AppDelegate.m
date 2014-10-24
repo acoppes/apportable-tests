@@ -24,6 +24,7 @@
 @implementation AppDelegate
 
 @synthesize window;
+@synthesize viewController;
 
 -(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -189,7 +190,15 @@
 - (void)dealloc {
 	[[CCDirector sharedDirector] end];
 	[window release];
+    [viewController release];
 	[super dealloc];
 }
+
+#ifdef APPORTABLE
+- (void)onSystemUiVisibilityChange:(int32_t)visibility
+{
+    NSLog(@"Window changed visibility: %d", visibility);
+}
+#endif
 
 @end
