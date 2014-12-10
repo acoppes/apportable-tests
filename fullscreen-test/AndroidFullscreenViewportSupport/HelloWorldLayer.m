@@ -121,6 +121,20 @@
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
+#ifdef APPORTABLE
+    NSLog(@"UIDevice - nativeSystemName: %@", [[UIDevice currentDevice] nativeSystemName]);
+    NSLog(@"UIDevice - nativeCPUABI: %@", [[UIDevice currentDevice] nativeCPUABI]);
+    NSLog(@"UIDevice - nativeModel: %@", [[UIDevice currentDevice] nativeModel]);
+    NSLog(@"UIDevice - nativeProduct: %@", [[UIDevice currentDevice] nativeProduct]);
+    NSLog(@"UIDevice - nativeManufacturer: %@", [[UIDevice currentDevice] nativeManufacturer]);
+    NSLog(@"UIDevice - nativeSystemVersion: %@", [[UIDevice currentDevice] nativeSystemVersion]);
+    // NSLog(@"UIDevice - nativeSDKVersion: %@", [[UIDevice currentDevice] nativeSDKVersion]);
+    
+    BOOL isCyanogenMod = [[UIDevice currentDevice] hasSystemFeature:@"com.cyanogenmod.android"];
+    
+    NSLog(@"UIDevice - is CyanogenMod: %@", isCyanogenMod ? @"true" : @"false");
+//hasSystemFeature()
+#endif
     return YES;
 }
 
@@ -195,7 +209,9 @@
         
         NSLog(@"Updated custom camera with new screen bounds size");
         
-        [self createContent];
+        [self runAction:[CCSequence actions:[CCDelayTime actionWithDuration:3.0f], [CCCallBlock actionWithBlock:^{
+            [self createContent];
+        }], nil]];
     }
 }
 

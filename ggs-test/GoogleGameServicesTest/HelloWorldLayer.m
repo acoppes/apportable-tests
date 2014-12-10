@@ -17,6 +17,10 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+#ifdef APPORTABLE
+#import "GoogleGameServicesApportable.h"
+#endif
+
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
 
@@ -99,13 +103,23 @@
     }
     
     {
-        CCLabelTTF *l = [CCLabelTTF labelWithString:@"Some text" dimensions:CGSizeMake(100, 30)
+        self.signedInLabel = [CCLabelTTF labelWithString:@"Not connected" dimensions:CGSizeMake(100, 30)
                                           alignment:UITextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap fontName:@"Comic_Book" fontSize:20];
-        l.anchorPoint = ccp(0.5, 0.5);
-        l.color = ccc3(255, 255, 255);
-        l.position = ccp(winSize.width * 0.5f, winSize.height * 0.5f);
-        [self addChild:l z:2];
+        self.signedInLabel.anchorPoint = ccp(0.5, 0.5);
+        self.signedInLabel.color = ccc3(255, 255, 255);
+        self.signedInLabel.position = ccp(winSize.width * 0.5f, winSize.height * 0.5f);
+        [self addChild:self.signedInLabel z:2];
     }
+    
+    self.wasConnected = NO;
+    
+#ifdef APPORTABLE
+    self.ggs = [[[GoogleGameServicesApportable alloc] init] autorelease];
+    NSLog(@"GoogleGameServicesApportable: BEFORE CALL");
+    [self.ggs printText:@"Hello!"];
+    [self.ggs initApi];
+    NSLog(@"GoogleGameServicesApportable: AFTER CALL");
+#endif
 }
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -115,12 +129,39 @@
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    CGPoint p = [self convertTouchToNodeSpace:touch];
+    CGSize winSize = [CCDirector sharedDirector].winSize;
 
+//#ifdef APPORTABLE
+//    bool connected = [self.ggs isConnected];
+//    NSLog(@"GoogleGameServicesApportable: %@", connected ? @"connected" : @"not connected");
+//#endif
+    
+    if (p.x > winSize.width / 2) {
+        NSLog(@"GoogleGameServicesApportable: Calling connect");
+#ifdef APPORTABLE
+        [self.ggs connect];
+#endif
+    } else {
+        NSLog(@"GoogleGameServicesApportable: Calling disconnect");
+#ifdef APPORTABLE
+        [self.ggs disconnect];
+#endif
+    }
+    
 }
 
 - (void)update:(ccTime)dt
 {
-
+#ifdef APPORTABLE
+    if ([self.ggs checkConnection] && !self.wasConnected) {
+        [self.signedInLabel setString:@"Connected"];
+        self.wasConnected = YES;
+    } else if (![self.ggs checkConnection] && self.wasConnected) {
+        [self.signedInLabel setString:@"Not connected"];
+        self.wasConnected = NO;
+    }
+#endif
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -129,7 +170,12 @@
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
-	
+#ifdef APPORTABLE
+    [_ggs release];
+#endif
+    
+    [_signedInLabel release];
+    
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }

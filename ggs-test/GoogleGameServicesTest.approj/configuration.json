@@ -12,18 +12,18 @@
     // A short name to identify the application.
     // Used to decide the APK filename, but not shown
     // anywhere in the app.
-    // "APPLICATION_NAME": "",
+    "APPLICATION_NAME": "GoogleGameServicesTest",
 
     // The name of the application to display in the launcher
-    // "APPLICATION_FULL_NAME": "",
+    "APPLICATION_FULL_NAME": "GoogleGameServicesTest",
 
     // The unique identifier for the application.
     // Normally this is in reverse DNS notation, e.g.,
     // "com.apportable.Spin"
-    // "APPLICATION_IDENTIFIER": "",
+    "APPLICATION_IDENTIFIER": "com.gemserk.tests.testote",
 
     // Short version name for the app, e.g., "1.0"
-    // "SHORT_VERSION": "",
+    "SHORT_VERSION": "0.0.1",
 
     // A list of features needed on the target platform.
     // Common features include:
@@ -124,6 +124,10 @@
     //"MPMETRICS_API_KEY": "",
     //"RENAME_TARGET": true,
 
+    "APPLICATION_MANIFEST_EXTRAS": [
+        "android/ggs.xml",
+    ],
+
   },
 
   // Sometimes header include path ordering matters.  If so, put the ordering constraints into this
@@ -147,7 +151,9 @@
     
     // A list of header search paths
     // e.g. "./External/facebook-sdk/include"
-    "header_paths": [],
+    "header_paths": [
+	"GoogleGameServicesTest/Android"
+    ],
     
     // A list of global compile flags for the project.
     // Flags can be either a string, e.g. "-Werror-shadow",
@@ -172,7 +178,9 @@
     // the file, any special flags, any defines, and the environment
     // where it should be compiled, e.g.,
     // {"source": "./PngImageLoader.m", "flags": ["-fstack-protector"], "defines": {"PNG": 1}, "env": {"TARGET_TEXTURE_FMT": "png"}}
-    "sources": [],
+    "sources": [
+	"GoogleGameServicesTest/Android/GoogleGameServicesApportable.m"
+    ],
     
     // A list of glob inclusion filters for additional files.
     // This can also be used to replace flags on multiple files.
@@ -203,10 +211,14 @@
     ],
 
     //A list of java Librarys (jars)
-    "java_libs": [],
+    "java_libs": [
+	"ggs-java/lib/google-play-services.jar"
+    ],
 
     //A list of java resource directories
-    "java_res_dirs": [],
+    "java_res_dirs": [
+	"android/res"
+    ],
 
     //A list of libs to include with the APK
     "libs":[],
@@ -250,7 +262,10 @@
    
     // A list of dependencies.  Typically these correspond to
     // frameworks in the xcode project.
-    "deps": [],
+    "deps": [
+ 	"PlusGames",
+ 	"GameKitPlus",
+    ],
     
     // A list of source files (e.g. .m, .mm, .c, .cc, and .cpp) files to remove from the build.
     // e.g. "./External/Reachabilty/Reachability.m"

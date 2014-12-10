@@ -17,6 +17,13 @@
     CGRect _screenBounds;
 }
 
+#ifdef APPORTABLE
+@property (nonatomic, retain) id ggs;
+#endif
+
+@property (nonatomic, retain) CCLabelTTF *signedInLabel;
+@property (readwrite) BOOL wasConnected;
+
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 
