@@ -133,7 +133,7 @@
     CGSize winSize = [CCDirector sharedDirector].winSize;
 
 //#ifdef APPORTABLE
-//    bool connected = [self.ggs isConnected];
+//    bool connected = [self.ggs connected];
 //    NSLog(@"GoogleGameServicesApportable: %@", connected ? @"connected" : @"not connected");
 //#endif
     
@@ -154,13 +154,16 @@
 - (void)update:(ccTime)dt
 {
 #ifdef APPORTABLE
-    if ([self.ggs checkConnection] && !self.wasConnected) {
+    BOOL isConnected = [self.ggs isConnected];
+    
+    if (isConnected && !self.wasConnected) {
         [self.signedInLabel setString:@"Connected"];
         self.wasConnected = YES;
-    } else if (![self.ggs checkConnection] && self.wasConnected) {
+    } else if (!isConnected && self.wasConnected) {
         [self.signedInLabel setString:@"Not connected"];
         self.wasConnected = NO;
     }
+    
 #endif
 }
 

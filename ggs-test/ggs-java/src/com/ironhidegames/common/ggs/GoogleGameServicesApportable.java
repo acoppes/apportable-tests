@@ -45,13 +45,13 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
             .build();
     }
     
-    public boolean checkConnection() {
+    public boolean isConnected() {
         return mGoogleApiClient != null && mGoogleApiClient.isConnected();
     }
     
     public void connect()
     {
-        if (this.checkConnection()) {
+        if (this.isConnected()) {
             Log.d("GoogleGameServicesApportable", "it is already connected");
         } else {
             Log.d("GoogleGameServicesApportable", "connecting");
@@ -60,7 +60,7 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     }
     
     public void disconnect() {
-        if (!this.checkConnection()) {
+        if (!this.isConnected()) {
             Log.d("GoogleGameServicesApportable", "can't disconnect since it is not connected");
         } else {
             Log.d("GoogleGameServicesApportable", "disconnecting");

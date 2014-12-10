@@ -18,6 +18,6 @@
 
 - (void) disconnect;
 
-- (bool) checkConnection;
+- (BOOL) isConnected;
 
 @end
