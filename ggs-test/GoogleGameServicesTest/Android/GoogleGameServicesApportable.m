@@ -21,11 +21,9 @@
     
     [GoogleGameServicesApportable registerConstructor];
     
-    [GoogleGameServicesApportable registerInstanceMethod:@"printText" selector:@selector(printText:) arguments:[NSString className], NULL];
-    [GoogleGameServicesApportable registerInstanceMethod:@"initApi" selector:@selector(initApi) arguments:NULL];
+    [GoogleGameServicesApportable registerInstanceMethod:@"initGoogleApiClient" selector:@selector(initGoogleApiClient:) arguments:[JavaClass intPrimitive], NULL];
     [GoogleGameServicesApportable registerInstanceMethod:@"connect" selector:@selector(connect) arguments:NULL];
     [GoogleGameServicesApportable registerInstanceMethod:@"disconnect" selector:@selector(disconnect) arguments:NULL];
-    //     [VerdeUITextView registerInstanceMethod:@"isEditable" selector:@selector(editable) returnValue:[JavaClass boolPrimitive] arguments: NULL];
     [GoogleGameServicesApportable registerInstanceMethod:@"isConnected" selector:@selector(isConnected) returnValue:[JavaClass boolPrimitive] arguments:NULL];
 }
 

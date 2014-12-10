@@ -116,8 +116,7 @@
 #ifdef APPORTABLE
     self.ggs = [[[GoogleGameServicesApportable alloc] init] autorelease];
     NSLog(@"GoogleGameServicesApportable: BEFORE CALL");
-    [self.ggs printText:@"Hello!"];
-    [self.ggs initApi];
+    [self.ggs initGoogleApiClient:(GGS_CLIENT_PLUS | GGS_CLIENT_GAMES | GGS_CLIENT_SNAPSHOT)];
     NSLog(@"GoogleGameServicesApportable: AFTER CALL");
 #endif
 }

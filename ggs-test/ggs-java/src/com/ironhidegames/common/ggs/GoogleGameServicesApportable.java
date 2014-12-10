@@ -18,6 +18,15 @@ import com.apportable.activity.VerdeActivity;
 
 public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
+    private final String TAG = "GoogleGameServicesApportable";
+    
+    public final static int CLIENT_NONE = 0x00;
+    public final static int CLIENT_GAMES = 0x01;
+    public final static int CLIENT_PLUS = 0x02;
+    public final static int CLIENT_SNAPSHOT = 0x04;
+    
+    public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS | CLIENT_SNAPSHOT;
+    
     private GoogleApiClient mGoogleApiClient;
     
     public GoogleGameServicesApportable()
@@ -25,24 +34,30 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
         
     }
     
-    public void printText(String text)
+    public void initGoogleApiClient(int clients)
     {
-        Log.d("GoogleGameServicesApportable", text);
-    }
-    
-    public void initApi()
-    {
-        VerdeActivity verdeActivity = VerdeActivity.getActivity();
+        VerdeActivity activity = VerdeActivity.getActivity();
         
-        Log.d("GoogleGameServicesApportable", "initApi");
+        Log.d(TAG, "initApi");
         
-        mGoogleApiClient = new GoogleApiClient.Builder(verdeActivity)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
-            .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-            .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
-            .build();
+        GoogleApiClient.Builder builder = new GoogleApiClient.Builder(activity, this, this);
+        
+        if ((clients & CLIENT_GAMES) != 0) {
+            builder.addApi(Games.API);
+            builder.addScope(Games.SCOPE_GAMES);
+        }
+
+        if ((clients & CLIENT_PLUS) != 0) {
+            builder.addApi(Plus.API);
+            builder.addScope(Plus.SCOPE_PLUS_LOGIN);
+        }
+
+        if ((clients & CLIENT_SNAPSHOT) != 0) {
+            builder.addScope(Drive.SCOPE_APPFOLDER);
+            builder.addApi(Drive.API);
+        }
+        
+        mGoogleApiClient = builder.build();
     }
     
     public boolean isConnected() {
@@ -52,18 +67,18 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     public void connect()
     {
         if (this.isConnected()) {
-            Log.d("GoogleGameServicesApportable", "it is already connected");
+            Log.d(TAG, "it is already connected");
         } else {
-            Log.d("GoogleGameServicesApportable", "connecting");
+            Log.d(TAG, "connecting");
             mGoogleApiClient.connect();
         }
     }
     
     public void disconnect() {
         if (!this.isConnected()) {
-            Log.d("GoogleGameServicesApportable", "can't disconnect since it is not connected");
+            Log.d(TAG, "can't disconnect since it is not connected");
         } else {
-            Log.d("GoogleGameServicesApportable", "disconnecting");
+            Log.d(TAG, "disconnecting");
             Games.signOut(mGoogleApiClient);
             mGoogleApiClient.disconnect();
         }
@@ -72,13 +87,14 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     @Override
     public void onConnected (Bundle connectionHint)
     {
-        Log.d("GoogleGameServicesApportable", "onConnected");
+        Log.d(TAG, "onConnected");
     }
     
     @Override
     public void onConnectionSuspended (int cause)
     {
-        Log.d("GoogleGameServicesApportable", "onConnectionSuspended: " + cause);
+        Log.d(TAG, "onConnectionSuspended: " + cause + ", trying to reconnect");
+        mGoogleApiClient.connect();
     }
     
     @Override
@@ -86,7 +102,7 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     {
         int errorCode = result.getErrorCode();
         
-        Log.d("GoogleGameServicesApportable", "onConnectionFailed: " + errorCode + ", " + result.isSuccess());
+        Log.d(TAG, "onConnectionFailed: " + errorCode + ", " + result.isSuccess());
         if (errorCode == ConnectionResult.SIGN_IN_REQUIRED || errorCode == ConnectionResult.RESOLUTION_REQUIRED) {
             try {
                 result.startResolutionForResult(VerdeActivity.getActivity(), errorCode);
