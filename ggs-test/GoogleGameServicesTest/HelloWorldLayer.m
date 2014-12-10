@@ -103,7 +103,7 @@
     }
     
     {
-        self.signedInLabel = [CCLabelTTF labelWithString:@"Not connected" dimensions:CGSizeMake(100, 30)
+        self.signedInLabel = [CCLabelTTF labelWithString:@"Not connected" dimensions:CGSizeMake(200, 30)
                                           alignment:UITextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap fontName:@"Comic_Book" fontSize:20];
         self.signedInLabel.anchorPoint = ccp(0.5, 0.5);
         self.signedInLabel.color = ccc3(255, 255, 255);
@@ -118,6 +118,13 @@
     NSLog(@"GoogleGameServicesApportable: BEFORE CALL");
     [self.ggs initGoogleApiClient:(GGS_CLIENT_PLUS | GGS_CLIENT_GAMES | GGS_CLIENT_SNAPSHOT)];
     NSLog(@"GoogleGameServicesApportable: AFTER CALL");
+    
+    __block HelloWorldLayer *layerBlock = self;
+    
+    self.ggs.onConnectedListener = ^{
+        [layerBlock.signedInLabel setString:@"Connected"];
+    };
+    
 #endif
 }
 
@@ -128,42 +135,48 @@
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGPoint p = [self convertTouchToNodeSpace:touch];
-    CGSize winSize = [CCDirector sharedDirector].winSize;
-
-//#ifdef APPORTABLE
-//    bool connected = [self.ggs connected];
-//    NSLog(@"GoogleGameServicesApportable: %@", connected ? @"connected" : @"not connected");
-//#endif
+#ifdef APPORTABLE
+    bool connected = [self.ggs isConnected];
     
-    if (p.x > winSize.width / 2) {
-        NSLog(@"GoogleGameServicesApportable: Calling connect");
-#ifdef APPORTABLE
+    if (!connected) {
+        [self.signedInLabel setString:@"Connecting..."];
         [self.ggs connect];
-#endif
     } else {
-        NSLog(@"GoogleGameServicesApportable: Calling disconnect");
-#ifdef APPORTABLE
         [self.ggs disconnect];
-#endif
+        [self.signedInLabel setString:@"Not connected"];
     }
+#endif
+    
+//    if (p.x > winSize.width / 2) {
+//        NSLog(@"GoogleGameServicesApportable: Calling connect");
+//#ifdef APPORTABLE
+//        [self.signedInLabel setString:@"Connecting..."];
+//        [self.ggs connect];
+//#endif
+//    } else {
+//        NSLog(@"GoogleGameServicesApportable: Calling disconnect");
+//#ifdef APPORTABLE
+//        [self.ggs disconnect];
+//        [self.signedInLabel setString:@"Not connected..."];
+//#endif
+//    }
     
 }
 
 - (void)update:(ccTime)dt
 {
-#ifdef APPORTABLE
-    BOOL isConnected = [self.ggs isConnected];
-    
-    if (isConnected && !self.wasConnected) {
-        [self.signedInLabel setString:@"Connected"];
-        self.wasConnected = YES;
-    } else if (!isConnected && self.wasConnected) {
-        [self.signedInLabel setString:@"Not connected"];
-        self.wasConnected = NO;
-    }
-    
-#endif
+//#ifdef APPORTABLE
+//    BOOL isConnected = [self.ggs isConnected];
+//    
+//    if (isConnected && !self.wasConnected) {
+//        [self.signedInLabel setString:@"Connected"];
+//        self.wasConnected = YES;
+//    } else if (!isConnected && self.wasConnected) {
+//        [self.signedInLabel setString:@"Not connected"];
+//        self.wasConnected = NO;
+//    }
+//    
+//#endif
 }
 
 // on "dealloc" you need to release all your retained objects

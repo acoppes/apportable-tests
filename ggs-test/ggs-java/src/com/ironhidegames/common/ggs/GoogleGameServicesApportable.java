@@ -2,6 +2,22 @@ package com.ironhidegames.common.ggs;
 
 import android.util.Log;
 import android.os.Bundle;
+import android.content.Intent;
+import android.app.Activity;
+
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,7 +43,13 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     
     public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS | CLIENT_SNAPSHOT;
     
+    private static final int RC_SIGN_IN = 9001;
+    
     private GoogleApiClient mGoogleApiClient;
+    
+    private boolean isSigningIn = false;
+    
+    private native void onConnectedCallback();
     
     public GoogleGameServicesApportable()
     {
@@ -66,12 +88,19 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     
     public void connect()
     {
+        if (this.isSigningIn) {
+            Log.d(TAG, "it is already trying to connect");
+            return;
+        }
+        
         if (this.isConnected()) {
             Log.d(TAG, "it is already connected");
-        } else {
-            Log.d(TAG, "connecting");
-            mGoogleApiClient.connect();
+            return;
         }
+        
+        Log.d(TAG, "connecting");
+        mGoogleApiClient.connect();
+        this.isSigningIn = true;
     }
     
     public void disconnect() {
@@ -81,13 +110,33 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
             Log.d(TAG, "disconnecting");
             Games.signOut(mGoogleApiClient);
             mGoogleApiClient.disconnect();
+            
+            this.isSigningIn = false;
         }
     }
+    
+//    // @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        if (requestCode == RC_SIGN_IN) {
+//            Log.d(TAG, "onActivityResult with requestCode == RC_SIGN_IN, responseCode="
+//                  + resultCode + ", intent=" + intent);
+//
+//            if (resultCode == Activty.RESULT_OK) {
+//                this.connect();
+//                // mGoogleApiClient.connect();
+//            } else {
+//                // TODO: copy base game utils
+//                // BaseGameUtils.showActivityResultError(this, requestCode, resultCode, R.string.signin_other_error);
+//            }
+//        }
+//    }
     
     @Override
     public void onConnected (Bundle connectionHint)
     {
         Log.d(TAG, "onConnected");
+        this.isSigningIn = false;
+        onConnectedCallback();
     }
     
     @Override
@@ -102,10 +151,12 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     {
         int errorCode = result.getErrorCode();
         
+        this.isSigningIn = false;
+        
         Log.d(TAG, "onConnectionFailed: " + errorCode + ", " + result.isSuccess());
         if (errorCode == ConnectionResult.SIGN_IN_REQUIRED || errorCode == ConnectionResult.RESOLUTION_REQUIRED) {
             try {
-                result.startResolutionForResult(VerdeActivity.getActivity(), errorCode);
+                result.startResolutionForResult(VerdeActivity.getActivity(), RC_SIGN_IN);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

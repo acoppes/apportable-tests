@@ -10,6 +10,8 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 
+@class GoogleGameServicesApportable;
+
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer <CCTargetedTouchDelegate>
 {
@@ -18,7 +20,7 @@
 }
 
 #ifdef APPORTABLE
-@property (nonatomic, retain) id ggs;
+@property (nonatomic, retain) GoogleGameServicesApportable *ggs;
 #endif
 
 @property (nonatomic, retain) CCLabelTTF *signedInLabel;

@@ -15,7 +15,15 @@
 
 #define GGS_CLIENT_ALL (GGS_CLIENT_GAMES | GGS_CLIENT_PLUS | GGS_CLIENT_SNAPSHOT)
 
-@interface GoogleGameServicesApportable : JavaObject
+#define GGS_CLIENT_RC_SIGN_IN 9001
+
+typedef void (^OnConnected)(void);
+
+@interface GoogleGameServicesApportable : JavaObject {
+    OnConnected _onConnectedListener;
+}
+
+@property (nonatomic, copy) OnConnected onConnectedListener;
 
 - (void) initGoogleApiClient:(int)clients;
 
