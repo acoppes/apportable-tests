@@ -122,10 +122,13 @@
     __block HelloWorldLayer *layerBlock = self;
     
     self.ggs.onConnectedListener = ^{
-        [layerBlock.signedInLabel setString:@"Connected"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [layerBlock.signedInLabel setString:@"Connected"];
+        });
     };
     
 #endif
+    
 }
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event

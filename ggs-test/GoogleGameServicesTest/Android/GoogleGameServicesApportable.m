@@ -8,9 +8,12 @@
 
 #import "GoogleGameServicesApportable.h"
 
+#import <BridgeKit/AndroidActivity.h>
+
 #pragma clang diagnostic push
 
 #pragma clang diagnostic ignored "-Wobjc-property-implementation"
+#pragma clang diagnostic ignored "-Wobjc-method-access"
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 
 @implementation GoogleGameServicesApportable
