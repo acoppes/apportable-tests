@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01138D491A41E8EC00516552 /* GenericButtonSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 01138D481A41E8EC00516552 /* GenericButtonSprite.m */; };
 		018F019C19D1FA050018E7E6 /* Comic_Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018F019B19D1FA050018E7E6 /* Comic_Book.ttf */; };
 		018F01A019D2138E0018E7E6 /* YIKES.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018F019F19D2138E0018E7E6 /* YIKES.ttf */; };
 		019BC79719D2F6DB0017AF43 /* CCMoveBehaviorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 019BC79619D2F6DB0017AF43 /* CCMoveBehaviorNode.m */; };
@@ -135,6 +136,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01138D471A41E8EC00516552 /* GenericButtonSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericButtonSprite.h; sourceTree = "<group>"; };
+		01138D481A41E8EC00516552 /* GenericButtonSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericButtonSprite.m; sourceTree = "<group>"; };
 		018F019B19D1FA050018E7E6 /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Comic_Book.ttf; path = Resources/Comic_Book.ttf; sourceTree = "<group>"; };
 		018F019F19D2138E0018E7E6 /* YIKES.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = YIKES.ttf; path = Resources/YIKES.ttf; sourceTree = "<group>"; };
 		019BC79519D2F6DB0017AF43 /* CCMoveBehaviorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMoveBehaviorNode.h; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 				01F483DE19D1F7E100E26C11 /* HelloWorldLayer.h */,
 				01F483DF19D1F7E100E26C11 /* HelloWorldLayer.m */,
 				01F483E119D1F7E100E26C11 /* GameConfig.h */,
+				01138D471A41E8EC00516552 /* GenericButtonSprite.h */,
+				01138D481A41E8EC00516552 /* GenericButtonSprite.m */,
 				01F4828419D1F7DF00E26C11 /* Resources */,
 				01F4829819D1F7DF00E26C11 /* libs */,
 				01F483D419D1F7E100E26C11 /* Supporting Files */,
@@ -884,6 +889,7 @@
 				01F4832919D1F7E000E26C11 /* CCTextureAtlas.m in Sources */,
 				01F483DA19D1F7E100E26C11 /* AppDelegate.m in Sources */,
 				01F4834B19D1F7E000E26C11 /* cocos2d.m in Sources */,
+				01138D491A41E8EC00516552 /* GenericButtonSprite.m in Sources */,
 				01F4832F19D1F7E000E26C11 /* CCTexturePVR.m in Sources */,
 				01F4834719D1F7E000E26C11 /* CCTransitionRadial.m in Sources */,
 				01F4833E19D1F7E000E26C11 /* CCTMXXMLParser.m in Sources */,

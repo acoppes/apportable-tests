@@ -202,7 +202,8 @@
 
     //A list of specific java sources file to compile
     "java_sources": [
-	"ggs-java/src/com/ironhidegames/common/ggs/GoogleGameServicesApportable.java"
+	"ggs-java/src/com/ironhidegames/common/ggs/GoogleGameServicesApportable.java",
+	"ggs-java/src/com/ironhidegames/common/ggs/GoogleGameServicesSnapshot.java"
     ],
 
     //A list of the java root source directories

@@ -17,6 +17,8 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+#import "GenericButtonSprite.h"
+
 #ifdef APPORTABLE
 #import "GoogleGameServicesApportable.h"
 #endif
@@ -41,14 +43,14 @@
 
 - (void)onEnter
 {
-    [[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
+   // [[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
     [super onEnter];
     [self scheduleUpdate];
 }
 
 - (void)onExit
 {
-    [[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+    // [[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
     [super onExit];
 }
 
@@ -103,6 +105,69 @@
     }
     
     {
+        GenericButtonSprite * button = [GenericButtonSprite button:CGSizeMake(64, 64) listener:^(GenericButtonSprite *button) {
+            
+            NSLog(@"GoogleGameServicesApportable: touch connect");
+            
+#ifdef APPORTABLE
+            if (![self.ggs isConnected]) {
+                [self.signedInLabel setString:@"Connecting..."];
+                [self.ggs connect];
+            }
+#endif
+            
+        }];
+        button.color = ccc3(0, 0, 255);
+        button.position = ccp(100, 100);
+        [self addChild:button];
+    }
+    
+    {
+        GenericButtonSprite * button = [GenericButtonSprite button:CGSizeMake(64, 64) listener:^(GenericButtonSprite *button) {
+            
+            NSLog(@"GoogleGameServicesApportable: touch disconnect");
+
+#ifdef APPORTABLE
+            if ([self.ggs isConnected]) {
+                [self.ggs disconnect];
+                [self.signedInLabel setString:@"Not connected"];
+            }
+#endif
+            
+        }];
+        button.color = ccc3(0, 0, 200);
+        button.position = ccp(200, 100);
+        [self addChild:button];
+    }
+    
+    {
+        GenericButtonSprite * button = [GenericButtonSprite button:CGSizeMake(64, 64) listener:^(GenericButtonSprite *button) {
+            
+            NSLog(@"GoogleGameServicesApportable: touch open snapshot");
+
+#ifdef APPORTABLE
+            if ([self.ggs isConnected]) {
+                
+                self.snapshot = [self.ggs openSnapshot:@"slot1" listener:^(GoogleGameServicesSnapshot *snapshot, int status){
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        NSString *str = [[NSString alloc] initWithData:[snapshot getContentsBytes] encoding:NSUTF8StringEncoding];
+//                        NSLog("loaded with status: %i, data: %@", status, str);
+                        NSLog(@"loaded with status: %i, length: %i", status, [[snapshot getContentsBytes] length]);
+                    });
+                    
+                }];
+                
+            }
+#endif
+            
+        }];
+        button.color = ccc3(0, 0, 200);
+        button.position = ccp(300, 100);
+        [self addChild:button];
+    }
+    
+    {
         self.signedInLabel = [CCLabelTTF labelWithString:@"Not connected" dimensions:CGSizeMake(200, 30)
                                           alignment:UITextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap fontName:@"Comic_Book" fontSize:20];
         self.signedInLabel.anchorPoint = ccp(0.5, 0.5);
@@ -134,22 +199,22 @@
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    return YES;
+    return NO;
 }
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-#ifdef APPORTABLE
-    bool connected = [self.ggs isConnected];
-    
-    if (!connected) {
-        [self.signedInLabel setString:@"Connecting..."];
-        [self.ggs connect];
-    } else {
-        [self.ggs disconnect];
-        [self.signedInLabel setString:@"Not connected"];
-    }
-#endif
+//#ifdef APPORTABLE
+//    bool connected = [self.ggs isConnected];
+//    
+//    if (!connected) {
+//        [self.signedInLabel setString:@"Connecting..."];
+//        [self.ggs connect];
+//    } else {
+//        [self.ggs disconnect];
+//        [self.signedInLabel setString:@"Not connected"];
+//    }
+//#endif
     
 //    if (p.x > winSize.width / 2) {
 //        NSLog(@"GoogleGameServicesApportable: Calling connect");
@@ -169,18 +234,13 @@
 
 - (void)update:(ccTime)dt
 {
-//#ifdef APPORTABLE
-//    BOOL isConnected = [self.ggs isConnected];
-//    
-//    if (isConnected && !self.wasConnected) {
-//        [self.signedInLabel setString:@"Connected"];
-//        self.wasConnected = YES;
-//    } else if (!isConnected && self.wasConnected) {
-//        [self.signedInLabel setString:@"Not connected"];
-//        self.wasConnected = NO;
-//    }
-//    
-//#endif
+#ifdef APPORTABLE
+    
+    if (self.snapshot) {
+        
+    }
+    
+#endif
 }
 
 // on "dealloc" you need to release all your retained objects

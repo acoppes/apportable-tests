@@ -45,13 +45,21 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     
     private static final int RC_SIGN_IN = 9001;
     
-    private GoogleApiClient mGoogleApiClient;
+    public GoogleApiClient mGoogleApiClient;
     
     private boolean isSigningIn = false;
     private boolean shouldTrySignInResolution;
     
     private native void onConnectedCallback();
     private native void onConnectionFailedCallback();
+    
+//    private static GoogleGameServicesApportable ggsService;
+//    
+//    public static GoogleGameServicesApportable getInstance() {
+//        if (ggsService == null) {
+//            ggsService = new GoogleGameServicesApportable();
+//        }
+//    }
     
     public GoogleGameServicesApportable()
     {

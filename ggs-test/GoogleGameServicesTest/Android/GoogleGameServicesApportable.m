@@ -38,6 +38,11 @@
     [GoogleGameServicesApportable registerCallback:@"onConnectionFailedCallback" selector:@selector(onConnectionFailedCallback) returnValue:NULL arguments:NULL];
 }
 
++ (NSString *)className
+{
+    return @"com.ironhidegames.common.ggs.GoogleGameServicesApportable";
+}
+
 - (void) connect {
     // tries to remove the observer before adding a new one
     NSLog(@"%@: connect, removing and adding observer", LOG_TAG);
@@ -58,11 +63,6 @@
 //    }
 //    [self _connect:trySignInResolution];
 //}
-
-+ (NSString *)className
-{
-    return @"com.ironhidegames.common.ggs.GoogleGameServicesApportable";
-}
 
 - (void) onConnectedCallback
 {
@@ -120,12 +120,89 @@
     });
 }
 
+// saves
+- (GoogleGameServicesSnapshot*) openSnapshot:(NSString*)name listener:(SnapshotOpenListener)listener
+{
+    GoogleGameServicesSnapshot *snapshot = [[[GoogleGameServicesSnapshot init] alloc] autorelease];
+    snapshot.openListener = listener;
+    [snapshot setGoogleGameServicesApportable:self];
+    [snapshot open:name];
+    return snapshot;
+}
+
 - (void)dealloc
 {
     [_onConnectedListener release];
     [super dealloc];
 }
 
-#pragma clang diagnostic pop
+@end
+
+@implementation GoogleGameServicesSnapshot
+
+@synthesize openListener = _openListener;
+
++ (void)initializeJava
+{
+    [super initializeJava];
+    
+    [GoogleGameServicesSnapshot registerConstructor];
+    
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"setGoogleGameServicesApportable" selector:@selector(setGoogleGameServicesApportable:) arguments:[GoogleGameServicesApportable className], NULL];
+    
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"open" selector:@selector(_open:) arguments:[NSString className], NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"isLoaded" selector:@selector(isLoaded) returnValue:[JavaClass boolPrimitive] arguments:NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"isOpening" selector:@selector(isOpening) returnValue:[JavaClass boolPrimitive] arguments:NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"getContentsBytes" selector:@selector(_getContentsBytes) returnValue:[NSData className]  arguments:NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"setContentsBytes" selector:@selector(_setContentsBytes:) arguments:[NSData className], NULL];
+    
+    [GoogleGameServicesApportable registerCallback:@"openCallback" selector:@selector(openCallback:) returnValue:NULL arguments:[JavaClass intPrimitive], NULL];
+}
+
++ (NSString *)className
+{
+    return @"com.ironhidegames.common.ggs.GoogleGameServicesSnapshot";
+}
+
+- (void) open:(NSString*)name;
+{
+    [self _open:name];
+}
+
+//- (BOOL) isLoaded
+//{
+//    // just in case that we need to modify this
+//    return [self _isLoaded];
+//}
+//
+//- (BOOL) isOpening
+//{
+//    // just in case that we need to modify this
+//    return [self _isOpening];
+//}
+
+- (NSData*) getContentsBytes
+{
+    return [self _getContentsBytes];
+}
+
+- (void) setContentsBytes:(NSData*)bytes
+{
+    [self _setContentsBytes:bytes];
+}
+
+- (void) openCallback:(int)status
+{
+    if (self.openListener)
+        self.openListener(self, status);
+}
+
+- (void)dealloc
+{
+    [_openListener release];
+    [super dealloc];
+}
 
 @end
+
+#pragma clang diagnostic pop

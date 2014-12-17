@@ -17,6 +17,31 @@
 
 #define GGS_CLIENT_RC_SIGN_IN 9001
 
+@class GoogleGameServicesApportable;
+@class GoogleGameServicesSnapshot;
+
+typedef void (^SnapshotOpenListener)(GoogleGameServicesSnapshot *snapshot, int status);
+
+@interface GoogleGameServicesSnapshot : JavaObject {
+    SnapshotOpenListener _openListener;
+}
+
+@property (nonatomic, copy) SnapshotOpenListener openListener;
+
+- (void) open:(NSString*)name;
+
+- (BOOL) isLoaded;
+
+- (BOOL) isOpening;
+
+- (NSData*) getContentsBytes;
+
+- (void) setGoogleGameServicesApportable:(GoogleGameServicesApportable*)googleGameServicesApportable;
+
+- (void) setContentsBytes:(NSData*)bytes;
+
+@end
+
 typedef void (^OnConnected)(void);
 
 @interface GoogleGameServicesApportable : JavaObject {
@@ -28,10 +53,15 @@ typedef void (^OnConnected)(void);
 - (void) initGoogleApiClient:(int)clients;
 
 - (void) connect;
+
 - (void) silentConnect;
 
 - (void) disconnect;
 
 - (BOOL) isConnected;
+
+// saves
+
+- (GoogleGameServicesSnapshot*) openSnapshot:(NSString*)name listener:(SnapshotOpenListener)listener;
 
 @end

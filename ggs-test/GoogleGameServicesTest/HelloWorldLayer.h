@@ -11,6 +11,7 @@
 #import "cocos2d.h"
 
 @class GoogleGameServicesApportable;
+@class GoogleGameServicesSnapshot;
 
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer <CCTargetedTouchDelegate>
@@ -21,6 +22,7 @@
 
 #ifdef APPORTABLE
 @property (nonatomic, retain) GoogleGameServicesApportable *ggs;
+@property (nonatomic, retain) GoogleGameServicesSnapshot *snapshot;
 #endif
 
 @property (nonatomic, retain) CCLabelTTF *signedInLabel;
