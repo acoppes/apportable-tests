@@ -48,8 +48,10 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     private GoogleApiClient mGoogleApiClient;
     
     private boolean isSigningIn = false;
+    private boolean shouldTrySignInResolution;
     
     private native void onConnectedCallback();
+    private native void onConnectionFailedCallback();
     
     public GoogleGameServicesApportable()
     {
@@ -88,6 +90,15 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     
     public void connect()
     {
+        this.internalConnect(true);
+    }
+    
+    public void silentConnect()
+    {
+        this.internalConnect(false);
+    }
+    
+    private void internalConnect(boolean trySignInResolution) {
         if (this.isSigningIn) {
             Log.d(TAG, "it is already trying to connect");
             return;
@@ -97,6 +108,8 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
             Log.d(TAG, "it is already connected");
             return;
         }
+
+        this.shouldTrySignInResolution = trySignInResolution;
         
         Log.d(TAG, "connecting");
         mGoogleApiClient.connect();
@@ -155,11 +168,22 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
         
         Log.d(TAG, "onConnectionFailed: " + errorCode + ", " + result.isSuccess());
         if (errorCode == ConnectionResult.SIGN_IN_REQUIRED || errorCode == ConnectionResult.RESOLUTION_REQUIRED) {
+            
+            if (!this.shouldTrySignInResolution) {
+                Log.d(TAG, "onConnectionFailed: resolution required but disabled for silent sign in.");
+                this.onConnectionFailedCallback();
+                return;
+            }
+            
             try {
+                Log.d(TAG, "onConnectionFailed: trying resolution for sign in.");
                 result.startResolutionForResult(VerdeActivity.getActivity(), RC_SIGN_IN);
             } catch (Exception e) {
+                this.onConnectionFailedCallback();
                 throw new RuntimeException(e);
             }
+        } else {
+            this.onConnectionFailedCallback();
         }
     }
     

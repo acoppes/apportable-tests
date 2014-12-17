@@ -127,6 +127,7 @@
         });
     };
     
+    [self.ggs silentConnect];
 #endif
     
 }

@@ -28,6 +28,7 @@ typedef void (^OnConnected)(void);
 - (void) initGoogleApiClient:(int)clients;
 
 - (void) connect;
+- (void) silentConnect;
 
 - (void) disconnect;
 
