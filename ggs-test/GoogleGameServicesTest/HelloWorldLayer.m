@@ -21,6 +21,7 @@
 
 #ifdef APPORTABLE
 #import "GoogleGameServicesApportable.h"
+#import "GoogleGameServicesSnapshot.h"
 #endif
 
 // HelloWorldLayer implementation
@@ -148,7 +149,9 @@
 #ifdef APPORTABLE
             if ([self.ggs isConnected]) {
                 
-                self.snapshot = [self.ggs openSnapshot:@"slot1" listener:^(GoogleGameServicesSnapshot *snapshot, int status){
+                self.snapshot = [self.ggs snapshot];
+                [self.snapshot setGoogleGameServicesApportable:self.ggs];
+                self.snapshot.openListener = ^(GoogleGameServicesSnapshot *snapshot, int status){
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
 //                        NSString *str = [[NSString alloc] initWithData:[snapshot getContentsBytes] encoding:NSUTF8StringEncoding];
@@ -156,8 +159,9 @@
                         NSLog(@"loaded with status: %i, length: %i", status, [[snapshot getContentsBytes] length]);
                     });
                     
-                }];
+                };
                 
+                [self.snapshot open:@"slot1"];
             }
 #endif
             
@@ -180,6 +184,10 @@
     
 #ifdef APPORTABLE
     self.ggs = [[[GoogleGameServicesApportable alloc] init] autorelease];
+    
+    GoogleGameServicesSnapshot *snapshot = [[GoogleGameServicesSnapshot alloc] init];
+    [snapshot release];
+    
     NSLog(@"GoogleGameServicesApportable: BEFORE CALL");
     [self.ggs initGoogleApiClient:(GGS_CLIENT_PLUS | GGS_CLIENT_GAMES | GGS_CLIENT_SNAPSHOT)];
     NSLog(@"GoogleGameServicesApportable: AFTER CALL");

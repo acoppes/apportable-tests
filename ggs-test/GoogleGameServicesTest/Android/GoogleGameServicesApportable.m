@@ -7,6 +7,7 @@
 //
 
 #import "GoogleGameServicesApportable.h"
+#import "GoogleGameServicesSnapshot.h"
 
 #import <BridgeKit/AndroidActivity.h>
 
@@ -27,7 +28,10 @@
     [super initializeJava];
     
     [GoogleGameServicesApportable registerConstructor];
-    
+
+    // + (BOOL)registerStaticMethod:(NSString *)javaMethodName selector:(SEL)selector returnValue:(NSString *)returnValue arguments:(NSString *)arg, ...
+    // [GoogleGameServicesApportable registerStaticMethod:@"getInstance" selector:@selector(getInstance) returnValue:[] arguments:[JavaClass intPrimitive], NULL];
+
     [GoogleGameServicesApportable registerInstanceMethod:@"initGoogleApiClient" selector:@selector(initGoogleApiClient:) arguments:[JavaClass intPrimitive], NULL];
     [GoogleGameServicesApportable registerInstanceMethod:@"connect" selector:@selector(_connect) arguments:NULL];
     [GoogleGameServicesApportable registerInstanceMethod:@"silentConnect" selector:@selector(_silentConnect) arguments:NULL];
@@ -121,85 +125,18 @@
 }
 
 // saves
-- (GoogleGameServicesSnapshot*) openSnapshot:(NSString*)name listener:(SnapshotOpenListener)listener
+- (GoogleGameServicesSnapshot*) snapshot;
 {
-    GoogleGameServicesSnapshot *snapshot = [[[GoogleGameServicesSnapshot init] alloc] autorelease];
-    snapshot.openListener = listener;
-    [snapshot setGoogleGameServicesApportable:self];
-    [snapshot open:name];
+    GoogleGameServicesSnapshot *snapshot = [[[GoogleGameServicesSnapshot alloc] init] autorelease];
+//    snapshot.openListener = listener;
+//    [snapshot setGoogleGameServicesApportable:self];
+//    [snapshot open:name];
     return snapshot;
 }
 
 - (void)dealloc
 {
     [_onConnectedListener release];
-    [super dealloc];
-}
-
-@end
-
-@implementation GoogleGameServicesSnapshot
-
-@synthesize openListener = _openListener;
-
-+ (void)initializeJava
-{
-    [super initializeJava];
-    
-    [GoogleGameServicesSnapshot registerConstructor];
-    
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"setGoogleGameServicesApportable" selector:@selector(setGoogleGameServicesApportable:) arguments:[GoogleGameServicesApportable className], NULL];
-    
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"open" selector:@selector(_open:) arguments:[NSString className], NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"isLoaded" selector:@selector(isLoaded) returnValue:[JavaClass boolPrimitive] arguments:NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"isOpening" selector:@selector(isOpening) returnValue:[JavaClass boolPrimitive] arguments:NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"getContentsBytes" selector:@selector(_getContentsBytes) returnValue:[NSData className]  arguments:NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"setContentsBytes" selector:@selector(_setContentsBytes:) arguments:[NSData className], NULL];
-    
-    [GoogleGameServicesApportable registerCallback:@"openCallback" selector:@selector(openCallback:) returnValue:NULL arguments:[JavaClass intPrimitive], NULL];
-}
-
-+ (NSString *)className
-{
-    return @"com.ironhidegames.common.ggs.GoogleGameServicesSnapshot";
-}
-
-- (void) open:(NSString*)name;
-{
-    [self _open:name];
-}
-
-//- (BOOL) isLoaded
-//{
-//    // just in case that we need to modify this
-//    return [self _isLoaded];
-//}
-//
-//- (BOOL) isOpening
-//{
-//    // just in case that we need to modify this
-//    return [self _isOpening];
-//}
-
-- (NSData*) getContentsBytes
-{
-    return [self _getContentsBytes];
-}
-
-- (void) setContentsBytes:(NSData*)bytes
-{
-    [self _setContentsBytes:bytes];
-}
-
-- (void) openCallback:(int)status
-{
-    if (self.openListener)
-        self.openListener(self, status);
-}
-
-- (void)dealloc
-{
-    [_openListener release];
     [super dealloc];
 }
 

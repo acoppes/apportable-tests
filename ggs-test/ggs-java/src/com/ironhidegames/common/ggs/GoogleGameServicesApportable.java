@@ -55,10 +55,11 @@ public class GoogleGameServicesApportable implements GoogleApiClient.ConnectionC
     
 //    private static GoogleGameServicesApportable ggsService;
 //    
-//    public static GoogleGameServicesApportable getInstance() {
+//    public static synchronized GoogleGameServicesApportable getInstance() {
 //        if (ggsService == null) {
 //            ggsService = new GoogleGameServicesApportable();
 //        }
+//        return ggsService;
 //    }
     
     public GoogleGameServicesApportable()
