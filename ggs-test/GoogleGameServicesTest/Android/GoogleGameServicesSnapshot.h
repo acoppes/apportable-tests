@@ -25,10 +25,16 @@ typedef void (^SnapshotOpenListener)(GoogleGameServicesSnapshot *snapshot, int s
 
 - (BOOL) isOpening;
 
-- (NSData*) getContentsBytes;
-
 - (void) setGoogleGameServicesApportable:(GoogleGameServicesApportable*)googleGameServicesApportable;
 
-- (void) setContentsBytes:(NSData*)bytes;
+// content
+
+- (BOOL) isClosed;
+
+- (NSData*) readFully;
+
+- (BOOL) writeBytes:(NSData*)bytes;
+
+- (BOOL) modifyBytes:(int)dstOffset bytes:(NSData*)bytes srcOffset:(int)srcOffset count:(int)count;
 
 @end

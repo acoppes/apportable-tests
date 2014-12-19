@@ -105,6 +105,12 @@ public class GoogleGameServicesSnapshot
         return this.loaded;
     }
     
+    public boolean isClosed() {
+        if (this.snapshotContents == null)
+            return true;
+        return this.snapshotContents.isClosed();
+    }
+    
     public byte[] getContentsBytes() {
         if (!this.isLoaded())
             return null;
@@ -116,7 +122,11 @@ public class GoogleGameServicesSnapshot
         }
     }
     
-    public void setContentsBytes(byte[] bytes) {
+    public void modifyBytes(int dstOffset, byte[] bytes, int srcOffset, int count) {
+        this.snapshotContents.modifyBytes(dstOffset, bytes, srcOffset, count);
+    }
+    
+    public void writeBytes(byte[] bytes) {
         this.snapshotContents.writeBytes(bytes);
     }
     

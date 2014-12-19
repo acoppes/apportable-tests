@@ -32,18 +32,23 @@
     [GoogleGameServicesSnapshot registerInstanceMethod:@"open" selector:@selector(_open:) arguments:[NSString className], NULL];
     [GoogleGameServicesSnapshot registerInstanceMethod:@"isLoaded" selector:@selector(isLoaded) returnValue:[JavaClass boolPrimitive] arguments:NULL];
     [GoogleGameServicesSnapshot registerInstanceMethod:@"isOpening" selector:@selector(isOpening) returnValue:[JavaClass boolPrimitive] arguments:NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"getContentsBytes" selector:@selector(_getContentsBytes) returnValue:[NSData className]  arguments:NULL];
-    [GoogleGameServicesSnapshot registerInstanceMethod:@"setContentsBytes" selector:@selector(_setContentsBytes:) arguments:[NSData className], NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"setGoogleGameServicesApportable" selector:@selector(setGoogleGameServicesApportable:) returnValue:NULL arguments:[GoogleGameServicesApportable className], NULL];
 
-    {
-        BOOL status = [GoogleGameServicesSnapshot registerInstanceMethod:@"setGoogleGameServicesApportable" selector:@selector(setGoogleGameServicesApportable:) returnValue:NULL arguments:[GoogleGameServicesApportable className], NULL];
-        
-        if (!status) {
-            [NSException raise:@"JavaMethodException" format:@"Failed to register method: %@", @"setGoogleGameServicesApportable"];
-        }
-    }
+    // content
     
-    // private native void openCallback(int status);
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"isClosed" selector:@selector(isClosed) returnValue:[JavaClass boolPrimitive] arguments:NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"readFully" selector:@selector(_readFully) returnValue:[NSData className]  arguments:NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"modifyBytes" selector:@selector(_modifyBytes:) returnValue:[JavaClass boolPrimitive] arguments:[JavaClass intPrimitive], [NSData className], [JavaClass intPrimitive], [JavaClass intPrimitive], NULL];
+    [GoogleGameServicesSnapshot registerInstanceMethod:@"writeBytes" selector:@selector(_writeBytes:) returnValue:[JavaClass boolPrimitive] arguments:[NSData className], NULL];
+    
+//    {
+//        BOOL status =
+//        
+//        if (!status) {
+//            [NSException raise:@"JavaMethodException" format:@"Failed to register method: %@", @"setGoogleGameServicesApportable"];
+//        }
+//    }
+    
     [GoogleGameServicesSnapshot registerCallback:@"openCallback" selector:@selector(openCallback:) returnValue:NULL arguments:[JavaClass intPrimitive], NULL];
 }
 
@@ -69,14 +74,19 @@
 //    return [self _isOpening];
 //}
 
-- (NSData*) getContentsBytes
+- (NSData*) readFully
 {
-    return [self _getContentsBytes];
+    return [self _readFully];
 }
 
-- (void) setContentsBytes:(NSData*)bytes
+- (BOOL) writeBytes:(NSData*)bytes
 {
-    [self _setContentsBytes:bytes];
+    return [self _writeBytes:bytes];
+}
+
+- (BOOL) modifyBytes:(int)dstOffset bytes:(NSData*)bytes srcOffset:(int)srcOffset count:(int)count
+{
+    return [self _modifyBytes:bytes];
 }
 
 - (void) openCallback:(int)status
